@@ -8,6 +8,13 @@ function nurseReducer(state, action) {
                                     shifts: [...state[action.nurseId].shifts, action.newShift],
                                     }
                 }
+      case 'deleteNurseFromShift':
+        return {...state,
+                [action.nurseId] : {...state[action.nurseId],
+                                    shifts: [...state[action.nurseId].shifts.filter((shiftId) => shiftId !== action.shiftId)],
+                }
+
+        };
       default:
         throw new Error();
     }
@@ -25,6 +32,14 @@ const updateNurseShift = (nurseId, newShift) => {
         type: 'updateShift',
         nurseId,
         newShift,
+    }
+};
+
+const deleteNurseFromShift = (nurseId, shiftId) => {
+    return {
+        type: 'deleteNurseFromShift',
+        nurseId,
+        shiftId
     }
 };
 
@@ -61,4 +76,4 @@ const updateShift = (shiftId, nurseId, nurseName) => {
 };
 
 
-export { nurseReducer, initializeNurseData, updateNurseShift, shiftReducer, initializeShiftData, updateShift };
+export { nurseReducer, initializeNurseData, updateNurseShift, deleteNurseFromShift, shiftReducer, initializeShiftData, updateShift };

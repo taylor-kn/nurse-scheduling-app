@@ -2,7 +2,7 @@ const validShift = (shift, nurseShifts) => {
     let [ shiftStart, shiftEnd ] = shift;
     for (const nurseShift of nurseShifts) {
         let [ nurseShiftStart, nurseShiftEnd ] = nurseShift;
-        if((nurseShiftStart >= shiftStart && nurseShiftStart <= shiftEnd) || 
+        if((nurseShiftStart >= shiftStart && nurseShiftStart < shiftEnd) || 
            (nurseShiftEnd >= shiftStart && nurseShiftEnd <= shiftEnd)) {
             return false;
         }

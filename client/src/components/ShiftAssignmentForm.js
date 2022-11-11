@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { SelectShifts, SelectNurses } from './SelectElements.js';
 import Box from '@mui/material/Box';
 import { AppState } from '../App.js';
-import { updateShift, updateNurseShift } from '../util/Reducers.js';
+import { updateShift, updateNurseShift, deleteNurseFromShift } from '../util/Reducers.js';
 import { validNurse, validShift } from '../util/ValidAssignmentHelpers.js';
 import { Alert } from '@mui/material';
 
@@ -27,6 +27,8 @@ const ShiftAssignmentForm = () => {
         setSelectedNurse(null);
     };
     const saveAssignment = () => {
+        let previousNurse = shiftData[selectedShift]?.nurse_id;
+        if (previousNurse) nurseDispatch(deleteNurseFromShift(previousNurse, selectedShift));
         let nurseShiftsTimes = selectedNurse ? nurseData[selectedNurse].shifts.map((shiftIdx) => [shiftData[shiftIdx].start, shiftData[shiftIdx].end]) : [];
         let shiftTime = [shiftData[selectedShift].start, shiftData[selectedShift].end];
         let nurseQualifies = validNurse(nurseData[selectedNurse]?.qualification, shiftData[selectedShift]?.qual_required );
